@@ -111,7 +111,7 @@
     model.containerCellClass = @"SideSlipCommonTableViewCell";
     model.regionTitle = keyword;
     model.customDict = @{REGION_SELECTION_TYPE:@(selectionType)};
-    model.itemList = @[[self createItemModelWithTitle:[NSString stringWithFormat:@"%@一", keyword] itemId:@"0000" selected:NO],
+    model.itemList = @[[self createItemModelWithTitle:[NSString stringWithFormat:@"%@一一一一一一一一一一一一一一一一", keyword] itemId:@"0000" selected:NO],
                        [self createItemModelWithTitle:[NSString stringWithFormat:@"%@二", keyword] itemId:@"0001" selected:NO],
                        [self createItemModelWithTitle:[NSString stringWithFormat:@"%@三", keyword] itemId:@"0002" selected:NO],
                        [self createItemModelWithTitle:[NSString stringWithFormat:@"%@四", keyword] itemId:@"0003" selected:NO],
