@@ -87,8 +87,9 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
     [_backCover setHidden:YES];
     [UIView animateWithDuration:_animationDuration animations:^{
         [self.navigationController.view setFrame:SLIP_DISTINATION_FRAME];
-    } completion:^(BOOL finished) {
         [_backCover setHidden:NO];
+    } completion:^(BOOL finished) {
+        
     }];
 }
 
@@ -214,6 +215,10 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
 
 - (void)sideSlipTableViewCellNeedsScrollToCell:(UITableViewCell *)cell atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated {
     NSIndexPath *indexPath = [_mainTableView indexPathForRowAtPoint:cell.center];
+    //NSIndexPath *indexPath = [_mainTableView indexPathForCell:cell];
+    
+    NSLog(@"%@",indexPath);
+    NSLog(@"%@",cell);
     [_mainTableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:animated];
 }
 

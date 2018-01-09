@@ -28,31 +28,31 @@
 const int BRIEF_ROW = 2;
 
 @interface SideSlipCommonTableViewCell () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *controlIcon;
-@property (weak, nonatomic) IBOutlet UILabel *controlLabel;
-@property (weak, nonatomic) IBOutlet UICollectionView *mainCollectionView;
-@property (strong, nonatomic) NSArray *dataList;
-@property (strong, nonatomic) NSIndexPath *indexPath;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeightConstraint;
-@property (strong, nonatomic) ZYSideSlipFilterRegionModel *regionModel;
-@property (assign, nonatomic) CommonTableViewCellSelectionType selectionType;
-@property (strong, nonatomic) NSMutableArray *selectedItemList;
-@property (copy, nonatomic) NSString *selectedItemString;
-@end
+    @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+    @property (weak, nonatomic) IBOutlet UIImageView *controlIcon;
+    @property (weak, nonatomic) IBOutlet UILabel *controlLabel;
+    @property (weak, nonatomic) IBOutlet UICollectionView *mainCollectionView;
+    @property (strong, nonatomic) NSArray *dataList;
+    @property (strong, nonatomic) NSIndexPath *indexPath;
+    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeightConstraint;
+    @property (strong, nonatomic) ZYSideSlipFilterRegionModel *regionModel;
+    @property (assign, nonatomic) CommonTableViewCellSelectionType selectionType;
+    @property (strong, nonatomic) NSMutableArray *selectedItemList;
+    @property (copy, nonatomic) NSString *selectedItemString;
+    @end
 
 @implementation SideSlipCommonTableViewCell
 + (NSString *)cellReuseIdentifier {
     return @"SideSlipCommonTableViewCell";
 }
-
+    
 + (instancetype)createCellWithIndexPath:(NSIndexPath *)indexPath {
     SideSlipCommonTableViewCell *cell = [[NSBundle mainBundle] loadNibNamed:@"SideSlipCommonTableViewCell" owner:nil options:nil][0];
     cell.indexPath = indexPath;
     [cell configureCell];
     return cell;
 }
-
+    
 - (void)configureCell {
     _mainCollectionView.delegate = self;
     _mainCollectionView.dataSource = self;
@@ -60,7 +60,7 @@ const int BRIEF_ROW = 2;
     [_mainCollectionView registerClass:[FilterCommonCollectionViewCell class] forCellWithReuseIdentifier:[FilterCommonCollectionViewCell cellReuseIdentifier]];
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
-
+    
 - (void)updateCellWithModel:(ZYSideSlipFilterRegionModel **)model
                   indexPath:(NSIndexPath *)indexPath {
     self.indexPath = indexPath;
@@ -87,8 +87,8 @@ const int BRIEF_ROW = 2;
     [_mainCollectionView reloadData];
     [self fitCollectonViewHeight];
 }
-
-//根据数据源个数决定collectionView高度
+    
+    //根据数据源个数决定collectionView高度
 - (void)fitCollectonViewHeight {
     CGFloat displayNumOfRow;
     if (_regionModel.isShowAll) {
@@ -100,7 +100,7 @@ const int BRIEF_ROW = 2;
     _collectionViewHeightConstraint.constant = collectionViewHeight;
     [_mainCollectionView updateHeight:collectionViewHeight];
 }
-
+    
 - (void)tap2SelectItem:(NSIndexPath *)indexPath {
     switch (_selectionType) {
         case BrandTableViewCellSelectionTypeSingle:
@@ -118,26 +118,26 @@ const int BRIEF_ROW = 2;
             }
             model.selected = !model.selected;
         }
-            break;
+        break;
         case BrandTableViewCellSelectionTypeMultiple:
         {
             NSArray *itemArray = _regionModel.itemList;
             CommonItemModel *model = [itemArray objectAtIndex:indexPath.row];
-                model.selected = !model.selected;
-                if (model.selected) {
-                    [self.selectedItemList addObject:model];
-                } else {
-                    [self.selectedItemList removeObject:model];
-                }
+            model.selected = !model.selected;
+            if (model.selected) {
+                [self.selectedItemList addObject:model];
+            } else {
+                [self.selectedItemList removeObject:model];
+            }
         }
-            break;
+        break;
         default:
-            break;
+        break;
     }
     _regionModel.selectedItemList = _selectedItemList;
     [self generateControlLabelText];
 }
-
+    
 - (NSString *)packageSelectedNameString {
     NSMutableArray *mutArray = [NSMutableArray array];
     for (CommonItemModel *model in _selectedItemList) {
@@ -145,7 +145,7 @@ const int BRIEF_ROW = 2;
     }
     return [mutArray componentsJoinedByString:@","];
 }
-
+    
 - (void)generateControlLabelText {
     self.selectedItemString = [self packageSelectedNameString];
     UIColor *textColor;
@@ -160,37 +160,37 @@ const int BRIEF_ROW = 2;
     [_controlLabel setText:labelContent];
     [_controlLabel setTextColor:textColor];
 }
-
+    
 #pragma mark - DataSource Delegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return _dataList.count;
 }
-
+    
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FilterCommonCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[FilterCommonCollectionViewCell cellReuseIdentifier] forIndexPath:indexPath];
     CommonItemModel *model = [_dataList objectAtIndex:indexPath.row];
     [cell updateCellWithModel:model];
     return cell;
 }
-
+    
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(ITEM_WIDTH, ITEM_HEIGHT);
 }
-
+    
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return LINE_SPACE_COLLECTION_ITEM;
 }
-
+    
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0.5*GAP_COLLECTION_ITEM;
 }
-
+    
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
     [self tap2SelectItem:indexPath];
     [_mainCollectionView reloadData];
 }
-
+    
 - (IBAction)clickShowMoreButton:(id)sender {
     _regionModel.isShowAll = !_regionModel.isShowAll;
     [self fitCollectonViewHeight];
@@ -199,21 +199,21 @@ const int BRIEF_ROW = 2;
         [self.delegate sideSlipTableViewCellNeedsReload:_indexPath];
     }
     //scroll
-    if (_regionModel.isShowAll && [self.delegate respondsToSelector:@selector(sideSlipTableViewCellNeedsScrollToCell:atScrollPosition:animated:)]) {
-        [self.delegate sideSlipTableViewCellNeedsScrollToCell:self atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-    }
+        if (_regionModel.isShowAll && [self.delegate respondsToSelector:@selector(sideSlipTableViewCellNeedsScrollToCell:atScrollPosition:animated:)]) {
+            [self.delegate sideSlipTableViewCellNeedsScrollToCell:self atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        }
 }
-
+    
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
     // Configure the view for the selected state
 }
-
+    
 - (NSMutableArray *)selectedItemList {
     if (!_selectedItemList) {
         _selectedItemList = [NSMutableArray array];
     }
     return _selectedItemList;
 }
-
-@end
+    
+    @end
