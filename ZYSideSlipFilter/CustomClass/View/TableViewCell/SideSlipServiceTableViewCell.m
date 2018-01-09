@@ -74,8 +74,9 @@
     _regionModel.customDict = [customDict copy];
     
     //UI
-    [self fitCollectonViewHeight];
     [_mainCollectionView reloadData];
+    [self fitCollectonViewHeight];
+    
 }
 
 //根据数据源个数决定collectionView高度
@@ -85,6 +86,7 @@
     CGFloat collectionViewHeight = displayNumOfRow*ITEM_HEIGHT + (displayNumOfRow - 1)*LINE_SPACE_COLLECTION_ITEM;
     _collectionViewHeightConstraint.constant = collectionViewHeight;
     [_mainCollectionView updateHeight:collectionViewHeight];
+
 }
 
 - (BOOL)tap2SelectItem:(NSIndexPath *)indexPath {

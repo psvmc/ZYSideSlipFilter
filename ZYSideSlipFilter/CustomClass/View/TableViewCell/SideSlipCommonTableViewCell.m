@@ -35,6 +35,7 @@ const int BRIEF_ROW = 2;
     @property (strong, nonatomic) NSArray *dataList;
     @property (strong, nonatomic) NSIndexPath *indexPath;
     @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeightConstraint;
+    @property (weak, nonatomic) IBOutlet NSLayoutConstraint *collOuterViewCons;
     @property (strong, nonatomic) ZYSideSlipFilterRegionModel *regionModel;
     @property (assign, nonatomic) CommonTableViewCellSelectionType selectionType;
     @property (strong, nonatomic) NSMutableArray *selectedItemList;
@@ -86,20 +87,27 @@ const int BRIEF_ROW = 2;
     //UI
     [_mainCollectionView reloadData];
     [self fitCollectonViewHeight];
+    
 }
     
     //根据数据源个数决定collectionView高度
-- (void)fitCollectonViewHeight {
-    CGFloat displayNumOfRow;
-    if (_regionModel.isShowAll) {
-        displayNumOfRow = ceil(_dataList.count/NUM_OF_ITEM_ONCE_ROW);
-    } else {
-        displayNumOfRow = BRIEF_ROW;
+    //result 是否重设coll的高度
+    - (void)fitCollectonViewHeight{
+        CGFloat displayNumOfRow;
+        if (_regionModel.isShowAll) {
+            displayNumOfRow = ceil(_dataList.count/NUM_OF_ITEM_ONCE_ROW);
+        } else {
+            displayNumOfRow = BRIEF_ROW;
+        }
+        
+        CGFloat collectionViewHeight = displayNumOfRow*ITEM_HEIGHT + (displayNumOfRow - 1)*LINE_SPACE_COLLECTION_ITEM;
+
+        if(_collOuterViewCons.constant != collectionViewHeight){
+            _collectionViewHeightConstraint.constant = collectionViewHeight;
+            [_mainCollectionView updateHeight:collectionViewHeight];
+            _collOuterViewCons.constant = collectionViewHeight;
+        }
     }
-    CGFloat collectionViewHeight = displayNumOfRow*ITEM_HEIGHT + (displayNumOfRow - 1)*LINE_SPACE_COLLECTION_ITEM;
-    _collectionViewHeightConstraint.constant = collectionViewHeight;
-    [_mainCollectionView updateHeight:collectionViewHeight];
-}
     
 - (void)tap2SelectItem:(NSIndexPath *)indexPath {
     switch (_selectionType) {
@@ -199,9 +207,12 @@ const int BRIEF_ROW = 2;
         [self.delegate sideSlipTableViewCellNeedsReload:_indexPath];
     }
     //scroll
-        if (_regionModel.isShowAll && [self.delegate respondsToSelector:@selector(sideSlipTableViewCellNeedsScrollToCell:atScrollPosition:animated:)]) {
-            [self.delegate sideSlipTableViewCellNeedsScrollToCell:self atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (_regionModel.isShowAll && [self.delegate respondsToSelector:@selector(sideSlipTableViewCellNeedsScrollToIndex:animated:)]) {
+            [self.delegate sideSlipTableViewCellNeedsScrollToIndex:_indexPath animated:YES];
         }
+    });
+    
 }
     
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

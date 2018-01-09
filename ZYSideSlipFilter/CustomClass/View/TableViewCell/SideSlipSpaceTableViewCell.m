@@ -11,7 +11,7 @@
 
 @implementation SideSlipSpaceTableViewCell
 + (instancetype)createCellWithIndexPath:(NSIndexPath *)indexPath {
-    SideSlipSpaceTableViewCell *cell = [[SideSlipSpaceTableViewCell alloc] initWithFrame:CGRectZero];
+    SideSlipSpaceTableViewCell *cell = [[SideSlipSpaceTableViewCell alloc] initWithFrame:CGRectMake(0, 0, 0, 20)];
     [cell setBackgroundColor:[UIColor hexColor:@"f1f1f1"]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;

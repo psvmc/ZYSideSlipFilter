@@ -81,13 +81,11 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
 
 - (void)show {
     [_sponsor.navigationController.view addSubview:self.backCover];
-    [_sponsor.navigationController addChildViewController:self.navigationController];
     [_sponsor.navigationController.view addSubview:self.navigationController.view];
     
-    [_backCover setHidden:YES];
+    [_backCover setHidden:NO];
     [UIView animateWithDuration:_animationDuration animations:^{
         [self.navigationController.view setFrame:SLIP_DISTINATION_FRAME];
-        [_backCover setHidden:NO];
     } completion:^(BOOL finished) {
         
     }];
@@ -117,7 +115,7 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
         resetString = @"Reset";
     }
     [resetButton setTitle:resetString forState:UIControlStateNormal];
-    [resetButton setBackgroundColor:[UIColor whiteColor]];
+    [resetButton setBackgroundColor:[UIColor colorWithRed:248.0/255 green:248.0/255 blue:248.0/255 alpha:0.8]];
     [bottomView addSubview:resetButton];
     //commitButton
     UIButton *commitButton = [[UIButton alloc] init];
@@ -167,29 +165,29 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
     return _dataList.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ZYSideSlipFilterRegionModel *model = _dataList[indexPath.row];
-    Class cellClazz =  NSClassFromString(model.containerCellClass);
-    if ([(id)cellClazz respondsToSelector:@selector(cellHeight)]) {
-        CGFloat cellHeight = objc_msgSendGetCellHeight(cellClazz, NSSelectorFromString(@"cellHeight"));
-        return cellHeight;
-    }
-    NSString *identifier = objc_msgSendGetCellIdentifier(cellClazz, NSSelectorFromString(@"cellReuseIdentifier"));
-    SideSlipBaseTableViewCell *templateCell = [self.templateCellDict objectForKey:identifier];
-    if (!templateCell) {
-        templateCell = objc_msgSendCreateCellWithIndexPath(cellClazz, NSSelectorFromString(@"createCellWithIndexPath:"), indexPath);
-        templateCell.delegate = self;
-        [self.templateCellDict setObject:templateCell forKey:identifier];
-    }
-    //update
-    [templateCell updateCellWithModel:&model indexPath:indexPath];
-    //calculate
-    NSLayoutConstraint *calculateCellConstraint = [NSLayoutConstraint constraintWithItem:templateCell.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.f constant:self.view.bounds.size.width];
-    [templateCell.contentView addConstraint:calculateCellConstraint];
-    CGSize cellSize = [templateCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-    [templateCell.contentView removeConstraint:calculateCellConstraint];
-    return cellSize.height;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    ZYSideSlipFilterRegionModel *model = _dataList[indexPath.row];
+//    Class cellClazz =  NSClassFromString(model.containerCellClass);
+//    if ([(id)cellClazz respondsToSelector:@selector(cellHeight)]) {
+//        CGFloat cellHeight = objc_msgSendGetCellHeight(cellClazz, NSSelectorFromString(@"cellHeight"));
+//        return cellHeight;
+//    }
+//    NSString *identifier = objc_msgSendGetCellIdentifier(cellClazz, NSSelectorFromString(@"cellReuseIdentifier"));
+//    SideSlipBaseTableViewCell *templateCell = [self.templateCellDict objectForKey:identifier];
+//    if (!templateCell) {
+//        templateCell = objc_msgSendCreateCellWithIndexPath(cellClazz, NSSelectorFromString(@"createCellWithIndexPath:"), indexPath);
+//        templateCell.delegate = self;
+//        [self.templateCellDict setObject:templateCell forKey:identifier];
+//    }
+//    //update
+//    [templateCell updateCellWithModel:&model indexPath:indexPath];
+//    //calculate
+//    NSLayoutConstraint *calculateCellConstraint = [NSLayoutConstraint constraintWithItem:templateCell.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.f constant:self.view.bounds.size.width];
+//    [templateCell.contentView addConstraint:calculateCellConstraint];
+//    CGSize cellSize = [templateCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+//    [templateCell.contentView removeConstraint:calculateCellConstraint];
+//    return cellSize.height;
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZYSideSlipFilterRegionModel *model = _dataList[indexPath.row];
@@ -200,31 +198,29 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
         cell = objc_msgSendCreateCellWithIndexPath(cellClazz, NSSelectorFromString(@"createCellWithIndexPath:"), indexPath);
         cell.delegate = self;
     }
+    
+    cell = objc_msgSendCreateCellWithIndexPath(cellClazz, NSSelectorFromString(@"createCellWithIndexPath:"), indexPath);
+    cell.delegate = self;
     //update
     [cell updateCellWithModel:&model indexPath:indexPath];
     return cell;
 }
 
 - (void)sideSlipTableViewCellNeedsReload:(NSIndexPath *)indexPath {
-    [_mainTableView reloadData];
+    [_mainTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)sideSlipTableViewCellNeedsPushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [self.navigationController pushViewController:viewController animated:animated];
 }
 
-- (void)sideSlipTableViewCellNeedsScrollToCell:(UITableViewCell *)cell atScrollPosition:(UITableViewScrollPosition)scrollPosition animated:(BOOL)animated {
-    NSIndexPath *indexPath = [_mainTableView indexPathForRowAtPoint:cell.center];
-    //NSIndexPath *indexPath = [_mainTableView indexPathForCell:cell];
-    
-    NSLog(@"%@",indexPath);
-    NSLog(@"%@",cell);
-    [_mainTableView scrollToRowAtIndexPath:indexPath atScrollPosition:scrollPosition animated:animated];
+- (void)sideSlipTableViewCellNeedsScrollToIndex:(NSIndexPath *)indexPath animated:(BOOL)animated {   
+    UITableViewCell * cell = [_mainTableView cellForRowAtIndexPath:indexPath];
+    [_mainTableView scrollRectToVisible:cell.frame animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - GetSet
@@ -234,6 +230,8 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
         _mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _mainTableView.delegate = self;
         _mainTableView.dataSource = self;
+        _mainTableView.estimatedRowHeight = 60;
+        _mainTableView.rowHeight = UITableViewAutomaticDimension;
         [_mainTableView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.view addSubview:_mainTableView];
     }
