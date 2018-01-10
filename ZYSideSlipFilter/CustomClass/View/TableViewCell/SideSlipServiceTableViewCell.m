@@ -115,22 +115,6 @@
     }
 }
 
-//- (NSArray *)generateAddressDataList {
-//    return @[[self createAddressModelWithAddress:@"广州市天河区" addressId:@"0000"],
-//             [self createAddressModelWithAddress:@"广州市天河区" addressId:@"0001"],
-//             [self createAddressModelWithAddress:@"广州市天河区" addressId:@"0002"],
-//             [self createAddressModelWithAddress:@"广州市天河区" addressId:@"0003"],
-//             [self createAddressModelWithAddress:@"广州市天河区" addressId:@"0004"],
-//             [self createAddressModelWithAddress:@"广州市天河区" addressId:@"0005"]];
-//}
-//
-//- (AddressModel *)createAddressModelWithAddress:(NSString *)address addressId:(NSString *)addressId {
-//    AddressModel *model = [[AddressModel alloc] init];
-//    model.addressString = address;
-//    model.addressId = addressId;
-//    return model;
-//}
-
 #pragma mark - DataSource Delegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return _dataList.count;

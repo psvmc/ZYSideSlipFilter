@@ -34,7 +34,7 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
 @property (strong, nonatomic) UITableView *mainTableView;
 @property (strong, nonatomic) UIView *backCover;
 @property (weak, nonatomic) UIViewController *sponsor;
-@property (strong, nonatomic) NSMutableDictionary *templateCellDict;
+
 @end
 
 @implementation ZYSideSlipFilterController
@@ -212,13 +212,6 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
         [self.view addSubview:_mainTableView];
     }
     return _mainTableView;
-}
-
-- (NSMutableDictionary *)templateCellDict {
-    if (!_templateCellDict) {
-        _templateCellDict = [NSMutableDictionary dictionary];
-    }
-    return _templateCellDict;
 }
 
 - (UIView *)backCover {

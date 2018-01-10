@@ -30,10 +30,6 @@
     return @"SideSlipLineTableViewCell";
 }
 
-+ (CGFloat)cellHeight {
-    return 8.f;
-}
-
 - (void)updateCellWithModel:(ZYSideSlipFilterRegionModel *__autoreleasing *)model indexPath:(NSIndexPath *)indexPath {
     
 }

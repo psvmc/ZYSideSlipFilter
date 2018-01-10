@@ -31,7 +31,6 @@
 
 - (void)updateCellWithAddressModel:(AddressModel *)model isSelected:(BOOL)isSelected {
     [_addressLabel setText:model.addressString];
-//    [self calculateContentLabelheight];
     if (isSelected) {
         [_iconImageView setImage:[UIImage imageNamed:@"address_icon_sel"]];
         [_addressLabel setTextColor:[UIColor hexColor:FILTER_RED_STRING]];
