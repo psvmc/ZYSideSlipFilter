@@ -19,11 +19,10 @@
 #define CELL_WIDTH SCREEN_WIDTH - FILTER_LEADING
 
 #define LINE_SPACE_COLLECTION_ITEM 8
-#define GAP_COLLECTION_ITEM 8
-#define NUM_OF_ITEM_ONCE_ROW 3.f
+#define GAP_COLLECTION_ITEM 12
+#define NUM_OF_ITEM_ONCE_ROW 2.f
 #define ITEM_WIDTH ((CELL_WIDTH - (NUM_OF_ITEM_ONCE_ROW+1)*GAP_COLLECTION_ITEM)/NUM_OF_ITEM_ONCE_ROW)
-#define ITEM_WIDTH_HEIGHT_RATIO 4.f
-#define ITEM_HEIGHT ceil(ITEM_WIDTH/ITEM_WIDTH_HEIGHT_RATIO)
+#define ITEM_HEIGHT 30
 
 const int BRIEF_ROW = 2;
 
@@ -100,7 +99,7 @@ const int BRIEF_ROW = 2;
             displayNumOfRow = BRIEF_ROW;
         }
         
-        CGFloat collectionViewHeight = displayNumOfRow*ITEM_HEIGHT + (displayNumOfRow - 1)*LINE_SPACE_COLLECTION_ITEM;
+        CGFloat collectionViewHeight = displayNumOfRow*ITEM_HEIGHT + displayNumOfRow*LINE_SPACE_COLLECTION_ITEM;
 
         if(_collOuterViewCons.constant != collectionViewHeight){
             _collectionViewHeightConstraint.constant = collectionViewHeight;
@@ -207,7 +206,7 @@ const int BRIEF_ROW = 2;
         [self.delegate sideSlipTableViewCellNeedsReload:_indexPath];
     }
     //scroll
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (_regionModel.isShowAll && [self.delegate respondsToSelector:@selector(sideSlipTableViewCellNeedsScrollToIndex:animated:)]) {
             [self.delegate sideSlipTableViewCellNeedsScrollToIndex:_indexPath animated:YES];
         }
@@ -217,7 +216,6 @@ const int BRIEF_ROW = 2;
     
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    // Configure the view for the selected state
 }
     
 - (NSMutableArray *)selectedItemList {

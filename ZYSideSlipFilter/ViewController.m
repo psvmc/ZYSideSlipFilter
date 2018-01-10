@@ -22,67 +22,67 @@
 @implementation ViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureShowFilterButton];
-    self.filterController = [[ZYSideSlipFilterController alloc] initWithSponsor:self
-                                                                     resetBlock:^(NSArray *dataList) {
-        for (ZYSideSlipFilterRegionModel *model in dataList) {
-            //selectedStatus
-            for (CommonItemModel *itemModel in model.itemList) {
-                [itemModel setSelected:NO];
-            }
-            //selectedItem
-            model.selectedItemList = nil;
-        }
-    }                                                               commitBlock:^(NSArray *dataList) {
-        //配送服务
-        ZYSideSlipFilterRegionModel *serviceRegionModel = dataList[0];
-        NSMutableString *serviceInfoString = [NSMutableString stringWithString:@"\n配送服务:\n"];
-        NSMutableArray *serviceItemSelectedArray = [NSMutableArray array];
-        AddressModel *addressModel = [serviceRegionModel.customDict objectForKey:SELECTED_ADDRESS];
-        [serviceInfoString appendFormat:@"选中地址:%@-%@\n", addressModel.addressId, addressModel.addressString];
-        for (CommonItemModel *itemModel in serviceRegionModel.itemList) {
-            if (itemModel.selected) {
-                [serviceItemSelectedArray addObject:[NSString stringWithFormat:@"%@-%@", itemModel.itemId, itemModel.itemName]];
-            }
-        }
-        [serviceInfoString appendString:[serviceItemSelectedArray componentsJoinedByString:@", "]];
-        NSLog(@"%@", serviceInfoString);
-        
-        //价格区间
-        ZYSideSlipFilterRegionModel *priceRegionModel = dataList[1];
-        PriceRangeModel *priceRangeModel = [priceRegionModel.customDict objectForKey:PRICE_RANGE_MODEL];
-        NSMutableString *priceRangeString = [NSMutableString stringWithString:@"\n价格区间: "];
-        if (priceRangeModel) {
-            [priceRangeString appendFormat:@"%@ - %@", priceRangeModel.minPrice, priceRangeModel.maxPrice];
-        }
-        NSLog(@"%@", priceRangeString);
-        
-        //Common Region
-        NSMutableString *commonRegionString = [NSMutableString string];
-        for (int i = 4; i < dataList.count; i ++) {
-            ZYSideSlipFilterRegionModel *commonRegionModel = dataList[i];
-            [commonRegionString appendFormat:@"\n%@:", commonRegionModel.regionTitle];
-            NSMutableArray *commonItemSelectedArray = [NSMutableArray array];
-            for (CommonItemModel *itemModel in commonRegionModel.itemList) {
-                if (itemModel.selected) {
-                    [commonItemSelectedArray addObject:[NSString stringWithFormat:@"%@-%@", itemModel.itemId, itemModel.itemName]];
-                }
-            }
-            [commonRegionString appendString:[commonItemSelectedArray componentsJoinedByString:@", "]];
-        }
-        NSLog(@"%@", commonRegionString);
-
-    }];
+    
+    self.filterController = [[ZYSideSlipFilterController alloc]
+                             initWithSponsor:self
+                             resetBlock:^(NSArray *dataList) {
+                                 for (ZYSideSlipFilterRegionModel *model in dataList) {
+                                     //selectedStatus
+                                     for (CommonItemModel *itemModel in model.itemList) {
+                                         [itemModel setSelected:NO];
+                                     }
+                                     //selectedItem
+                                     model.selectedItemList = nil;
+                                 }
+                             }
+                             commitBlock:^(NSArray *dataList) {
+                                 //配送服务
+                                 ZYSideSlipFilterRegionModel *serviceRegionModel = dataList[0];
+                                 NSMutableString *serviceInfoString = [NSMutableString stringWithString:@"\n配送服务:\n"];
+                                 NSMutableArray *serviceItemSelectedArray = [NSMutableArray array];
+                                 AddressModel *addressModel = [serviceRegionModel.customDict objectForKey:SELECTED_ADDRESS];
+                                 [serviceInfoString appendFormat:@"选中地址:%@-%@\n", addressModel.addressId, addressModel.addressString];
+                                 for (CommonItemModel *itemModel in serviceRegionModel.itemList) {
+                                     if (itemModel.selected) {
+                                         [serviceItemSelectedArray addObject:[NSString stringWithFormat:@"%@-%@", itemModel.itemId, itemModel.itemName]];
+                                     }
+                                 }
+                                 [serviceInfoString appendString:[serviceItemSelectedArray componentsJoinedByString:@", "]];
+                                 NSLog(@"%@", serviceInfoString);
+                                 
+                                 //价格区间
+                                 ZYSideSlipFilterRegionModel *priceRegionModel = dataList[1];
+                                 PriceRangeModel *priceRangeModel = [priceRegionModel.customDict objectForKey:PRICE_RANGE_MODEL];
+                                 NSMutableString *priceRangeString = [NSMutableString stringWithString:@"\n价格区间: "];
+                                 if (priceRangeModel) {
+                                     [priceRangeString appendFormat:@"%@ - %@", priceRangeModel.minPrice, priceRangeModel.maxPrice];
+                                 }
+                                 NSLog(@"%@", priceRangeString);
+                                 
+                                 //Common Region
+                                 NSMutableString *commonRegionString = [NSMutableString string];
+                                 for (int i = 4; i < dataList.count; i ++) {
+                                     ZYSideSlipFilterRegionModel *commonRegionModel = dataList[i];
+                                     if(![commonRegionModel.containerCellClass isEqualToString:@"SideSlipLineTableViewCell"]){
+                                         [commonRegionString appendFormat:@"\n%@:", commonRegionModel.regionTitle];
+                                         NSMutableArray *commonItemSelectedArray = [NSMutableArray array];
+                                         for (CommonItemModel *itemModel in commonRegionModel.itemList) {
+                                             if (itemModel.selected) {
+                                                 [commonItemSelectedArray addObject:[NSString stringWithFormat:@"%@-%@", itemModel.itemId, itemModel.itemName]];
+                                             }
+                                         }
+                                         [commonRegionString appendString:[commonItemSelectedArray componentsJoinedByString:@", "]];
+                                     }
+                                     
+                                 }
+                                 NSLog(@"%@", commonRegionString);
+                                 
+                             }];
     _filterController.animationDuration = .3f;
     _filterController.sideSlipLeading = 0.15*[UIScreen mainScreen].bounds.size.width;
     _filterController.dataList = [self packageDataList];
 }
 
-- (void)configureShowFilterButton {
-    _showFilterButton.layer.shadowOffset = CGSizeMake(1, 1);
-    _showFilterButton.layer.shadowOpacity = 0.6f;
-    _showFilterButton.layer.shadowColor = [UIColor grayColor].CGColor;
-}
 
 - (IBAction)clickFilterButton:(id)sender {
     [_filterController show];
@@ -95,42 +95,39 @@
     [dataArray addObject:[self priceFilterRegionModel]];
     [dataArray addObject:[self allCategoryFilterRegionModel]];
     [dataArray addObject:[self spaceFilterRegionModel]];
-    [dataArray addObject:[self commonFilterRegionModelWithKeyword:@"品牌" selectionType:BrandTableViewCellSelectionTypeSingle]];
-    [dataArray addObject:[self commonFilterRegionModelWithKeyword:@"种类" selectionType:BrandTableViewCellSelectionTypeSingle]];
+    [dataArray addObject:[self commonFilterRegionModelWithKeyword:@"品牌" selectionType:BrandTableViewCellSelectionTypeSingle isShowAll:YES]];
+    [dataArray addObject:[self commonFilterRegionModelWithKeyword:@"种类" selectionType:BrandTableViewCellSelectionTypeSingle isShowAll:NO]];
     [dataArray addObject:[self spaceFilterRegionModel]];
-    [dataArray addObject:[self commonFilterRegionModelWithKeyword:@"特性" selectionType:BrandTableViewCellSelectionTypeSingle]];
-    [dataArray addObject:[self commonFilterRegionModelWithKeyword:@"适用场景" selectionType:BrandTableViewCellSelectionTypeMultiple]];
-    [dataArray addObject:[self commonFilterRegionModelWithKeyword:@"存储方式" selectionType:BrandTableViewCellSelectionTypeMultiple]];
+    [dataArray addObject:[self commonFilterRegionModelWithKeyword:@"特性" selectionType:BrandTableViewCellSelectionTypeSingle isShowAll:NO]];
+    [dataArray addObject:[self commonFilterRegionModelWithKeyword:@"适用场景" selectionType:BrandTableViewCellSelectionTypeMultiple isShowAll:YES]];
     return [dataArray mutableCopy];
 }
 
-- (ZYSideSlipFilterRegionModel *)commonFilterRegionModelWithKeyword:(NSString *)keyword selectionType:(CommonTableViewCellSelectionType)selectionType {
+- (ZYSideSlipFilterRegionModel *)commonFilterRegionModelWithKeyword:(NSString *)keyword selectionType:(CommonTableViewCellSelectionType)selectionType isShowAll:(Boolean) isShowAll{
     ZYSideSlipFilterRegionModel *model = [[ZYSideSlipFilterRegionModel alloc] init];
     model.containerCellClass = @"SideSlipCommonTableViewCell";
     model.regionTitle = keyword;
-    model.isShowAll = YES;
+    model.isShowAll = isShowAll;
     model.customDict = @{REGION_SELECTION_TYPE:@(selectionType)};
-    model.itemList = @[[self createItemModelWithTitle:[NSString stringWithFormat:@"%@一", keyword] itemId:@"0000" selected:NO],
-                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@二", keyword] itemId:@"0001" selected:NO],
-                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@三", keyword] itemId:@"0002" selected:YES],
-                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@四", keyword] itemId:@"0003" selected:NO],
-                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@五", keyword] itemId:@"0004" selected:NO],
-                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@六", keyword] itemId:@"0005" selected:NO],
-                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@七", keyword] itemId:@"0006" selected:NO],
-                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@八", keyword] itemId:@"0007" selected:NO],
-                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@九", keyword] itemId:@"0008" selected:NO],
-                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@十", keyword] itemId:@"0009" selected:NO]
+    model.itemList = @[[self createItemModelWithTitle:[NSString stringWithFormat:@"%@一", keyword] itemId:@"0000"],
+                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@二", keyword] itemId:@"0001"],
+                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@三", keyword] itemId:@"0002"],
+                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@四", keyword] itemId:@"0003"],
+                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@五", keyword] itemId:@"0004"],
+                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@六", keyword] itemId:@"0005"],
+                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@七", keyword] itemId:@"0006"],
+                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@八", keyword] itemId:@"0007"],
+                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@九", keyword] itemId:@"0008"],
+                       [self createItemModelWithTitle:[NSString stringWithFormat:@"%@十", keyword] itemId:@"0009"]
                        ];
     return model;
 }
 
 - (CommonItemModel *)createItemModelWithTitle:(NSString *)itemTitle
-                                       itemId:(NSString *)itemId
-                                     selected:(BOOL)selected {
+                                       itemId:(NSString *)itemId {
     CommonItemModel *model = [[CommonItemModel alloc] init];
     model.itemId = itemId;
     model.itemName = itemTitle;
-    model.selected = selected;
     return model;
 }
 
@@ -138,11 +135,11 @@
     ZYSideSlipFilterRegionModel *model = [[ZYSideSlipFilterRegionModel alloc] init];
     model.containerCellClass = @"SideSlipServiceTableViewCell";
     model.regionTitle = @"配送服务";
-    model.itemList = @[[self createItemModelWithTitle:@"商城配送" itemId:@"0000" selected:NO],
-                       [self createItemModelWithTitle:@"货到付款" itemId:@"0001" selected:NO],
-                       [self createItemModelWithTitle:@"包邮" itemId:@"0002" selected:NO],
-                       [self createItemModelWithTitle:@"移动专享" itemId:@"0003" selected:NO],
-                       [self createItemModelWithTitle:@"全球购" itemId:@"0004" selected:NO]
+    model.itemList = @[[self createItemModelWithTitle:@"商城配送" itemId:@"0000"],
+                       [self createItemModelWithTitle:@"货到付款" itemId:@"0001"],
+                       [self createItemModelWithTitle:@"包邮" itemId:@"0002"],
+                       [self createItemModelWithTitle:@"移动专享" itemId:@"0003"],
+                       [self createItemModelWithTitle:@"全球购" itemId:@"0004"]
                        ];
     model.customDict = @{ADDRESS_LIST:[self generateAddressDataList]};
     return model;
@@ -164,7 +161,7 @@
 
 - (ZYSideSlipFilterRegionModel *)spaceFilterRegionModel {
     ZYSideSlipFilterRegionModel *model = [[ZYSideSlipFilterRegionModel alloc] init];
-    model.containerCellClass = @"SideSlipSpaceTableViewCell";
+    model.containerCellClass = @"SideSlipLineTableViewCell";
     return model;
 }
 
@@ -186,7 +183,6 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end

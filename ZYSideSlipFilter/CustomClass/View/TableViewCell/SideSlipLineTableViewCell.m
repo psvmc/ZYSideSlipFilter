@@ -1,18 +1,22 @@
 //
-//  SideSlipSpaceTableViewCell.m
+//  SideSlipLineTableViewCell.m
 //  ZYSideSlipFilter
 //
-//  Created by zhiyi on 16/10/19.
-//  Copyright © 2016年 zhiyi. All rights reserved.
+//  Created by 张剑 on 2018/1/10.
+//  Copyright © 2018年 zhiyi. All rights reserved.
 //
 
-#import "SideSlipSpaceTableViewCell.h"
-#import "UIColor+hexColor.h"
+#import "SideSlipLineTableViewCell.h"
 
-@implementation SideSlipSpaceTableViewCell
+@implementation SideSlipLineTableViewCell
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
+
 + (instancetype)createCellWithIndexPath:(NSIndexPath *)indexPath {
-    SideSlipSpaceTableViewCell *cell = [[SideSlipSpaceTableViewCell alloc] initWithFrame:CGRectMake(0, 0, 0, 20)];
-    [cell setBackgroundColor:[UIColor hexColor:@"f1f1f1"]];
+    SideSlipLineTableViewCell *cell = [[NSBundle mainBundle] loadNibNamed:@"SideSlipLineTableViewCell" owner:nil options:nil][0];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -23,7 +27,7 @@
 }
 
 + (NSString *)cellReuseIdentifier {
-    return @"SideSlipSpaceTableViewCell";
+    return @"SideSlipLineTableViewCell";
 }
 
 + (CGFloat)cellHeight {
@@ -33,4 +37,5 @@
 - (void)updateCellWithModel:(ZYSideSlipFilterRegionModel *__autoreleasing *)model indexPath:(NSIndexPath *)indexPath {
     
 }
+
 @end

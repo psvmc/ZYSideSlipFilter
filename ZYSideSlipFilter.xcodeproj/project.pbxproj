@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		02788BC62005A2AF00CFCD68 /* SideSlipLineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 02788BC42005A2AF00CFCD68 /* SideSlipLineTableViewCell.m */; };
+		02788BC72005A2AF00CFCD68 /* SideSlipLineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 02788BC52005A2AF00CFCD68 /* SideSlipLineTableViewCell.xib */; };
 		4854C3331DBC90A500AB16DA /* FilterAddressController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854C30F1DBC90A500AB16DA /* FilterAddressController.m */; };
 		4854C3341DBC90A500AB16DA /* FilterAddressController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4854C3101DBC90A500AB16DA /* FilterAddressController.xib */; };
 		4854C3351DBC90A500AB16DA /* FilterAllCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854C3121DBC90A500AB16DA /* FilterAllCategoryViewController.m */; };
@@ -26,7 +28,6 @@
 		4854C3781DBC943900AB16DA /* SideSlipPriceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4854C36B1DBC943900AB16DA /* SideSlipPriceTableViewCell.xib */; };
 		4854C3791DBC943900AB16DA /* SideSlipServiceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854C36D1DBC943900AB16DA /* SideSlipServiceTableViewCell.m */; };
 		4854C37A1DBC943900AB16DA /* SideSlipServiceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4854C36E1DBC943900AB16DA /* SideSlipServiceTableViewCell.xib */; };
-		4854C37B1DBC943900AB16DA /* SideSlipSpaceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854C3701DBC943900AB16DA /* SideSlipSpaceTableViewCell.m */; };
 		486B766D1DB2008D000A7B53 /* ZYSideSlipFilterRegionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 486B766C1DB2008D000A7B53 /* ZYSideSlipFilterRegionModel.m */; };
 		486B76791DB283EE000A7B53 /* UIView+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 486B76781DB283EE000A7B53 /* UIView+Utils.m */; };
 		486B76821DB38A0D000A7B53 /* UIColor+hexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 486B76811DB38A0D000A7B53 /* UIColor+hexColor.m */; };
@@ -55,6 +56,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02788BC32005A2AF00CFCD68 /* SideSlipLineTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SideSlipLineTableViewCell.h; sourceTree = "<group>"; };
+		02788BC42005A2AF00CFCD68 /* SideSlipLineTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SideSlipLineTableViewCell.m; sourceTree = "<group>"; };
+		02788BC52005A2AF00CFCD68 /* SideSlipLineTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideSlipLineTableViewCell.xib; sourceTree = "<group>"; };
 		4854C30E1DBC90A500AB16DA /* FilterAddressController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterAddressController.h; sourceTree = "<group>"; };
 		4854C30F1DBC90A500AB16DA /* FilterAddressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterAddressController.m; sourceTree = "<group>"; };
 		4854C3101DBC90A500AB16DA /* FilterAddressController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterAddressController.xib; sourceTree = "<group>"; };
@@ -86,8 +90,6 @@
 		4854C36C1DBC943900AB16DA /* SideSlipServiceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideSlipServiceTableViewCell.h; sourceTree = "<group>"; };
 		4854C36D1DBC943900AB16DA /* SideSlipServiceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideSlipServiceTableViewCell.m; sourceTree = "<group>"; };
 		4854C36E1DBC943900AB16DA /* SideSlipServiceTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SideSlipServiceTableViewCell.xib; sourceTree = "<group>"; };
-		4854C36F1DBC943900AB16DA /* SideSlipSpaceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideSlipSpaceTableViewCell.h; sourceTree = "<group>"; };
-		4854C3701DBC943900AB16DA /* SideSlipSpaceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideSlipSpaceTableViewCell.m; sourceTree = "<group>"; };
 		486B766B1DB2008D000A7B53 /* ZYSideSlipFilterRegionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZYSideSlipFilterRegionModel.h; sourceTree = "<group>"; };
 		486B766C1DB2008D000A7B53 /* ZYSideSlipFilterRegionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZYSideSlipFilterRegionModel.m; sourceTree = "<group>"; };
 		486B76771DB283EE000A7B53 /* UIView+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Utils.h"; sourceTree = "<group>"; };
@@ -212,8 +214,9 @@
 				4854C36C1DBC943900AB16DA /* SideSlipServiceTableViewCell.h */,
 				4854C36D1DBC943900AB16DA /* SideSlipServiceTableViewCell.m */,
 				4854C36E1DBC943900AB16DA /* SideSlipServiceTableViewCell.xib */,
-				4854C36F1DBC943900AB16DA /* SideSlipSpaceTableViewCell.h */,
-				4854C3701DBC943900AB16DA /* SideSlipSpaceTableViewCell.m */,
+				02788BC32005A2AF00CFCD68 /* SideSlipLineTableViewCell.h */,
+				02788BC42005A2AF00CFCD68 /* SideSlipLineTableViewCell.m */,
+				02788BC52005A2AF00CFCD68 /* SideSlipLineTableViewCell.xib */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 			files = (
 				4854C3341DBC90A500AB16DA /* FilterAddressController.xib in Resources */,
 				4854C37A1DBC943900AB16DA /* SideSlipServiceTableViewCell.xib in Resources */,
+				02788BC72005A2AF00CFCD68 /* SideSlipLineTableViewCell.xib in Resources */,
 				4854C35F1DBC942700AB16DA /* FilterCommonCollectionViewCell.xib in Resources */,
 				4854C3761DBC943900AB16DA /* SideSlipCommonTableViewCell.xib in Resources */,
 				553B4FA51DB0C1B3007A2374 /* LaunchScreen.storyboard in Resources */,
@@ -471,11 +475,11 @@
 				4854C3351DBC90A500AB16DA /* FilterAllCategoryViewController.m in Sources */,
 				553B4FC21DB0C23F007A2374 /* ZYSideSlipFilterController.m in Sources */,
 				4854C3731DBC943900AB16DA /* SideSlipAllCategoryTableViewCell.m in Sources */,
-				4854C37B1DBC943900AB16DA /* SideSlipSpaceTableViewCell.m in Sources */,
 				553B4F9A1DB0C1B3007A2374 /* AppDelegate.m in Sources */,
 				55F6CF861DB8A1C1004295B3 /* NSString+Utils.m in Sources */,
 				4854C3571DBC90FE00AB16DA /* PriceRangeModel.m in Sources */,
 				4854C3551DBC90FE00AB16DA /* AddressModel.m in Sources */,
+				02788BC62005A2AF00CFCD68 /* SideSlipLineTableViewCell.m in Sources */,
 				4854C35D1DBC942700AB16DA /* FilterBaseCollectionViewCell.m in Sources */,
 				4854C3711DBC943900AB16DA /* AddressTableViewCell.m in Sources */,
 				4854C3771DBC943900AB16DA /* SideSlipPriceTableViewCell.m in Sources */,

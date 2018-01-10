@@ -165,30 +165,6 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
     return _dataList.count;
 }
 
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    ZYSideSlipFilterRegionModel *model = _dataList[indexPath.row];
-//    Class cellClazz =  NSClassFromString(model.containerCellClass);
-//    if ([(id)cellClazz respondsToSelector:@selector(cellHeight)]) {
-//        CGFloat cellHeight = objc_msgSendGetCellHeight(cellClazz, NSSelectorFromString(@"cellHeight"));
-//        return cellHeight;
-//    }
-//    NSString *identifier = objc_msgSendGetCellIdentifier(cellClazz, NSSelectorFromString(@"cellReuseIdentifier"));
-//    SideSlipBaseTableViewCell *templateCell = [self.templateCellDict objectForKey:identifier];
-//    if (!templateCell) {
-//        templateCell = objc_msgSendCreateCellWithIndexPath(cellClazz, NSSelectorFromString(@"createCellWithIndexPath:"), indexPath);
-//        templateCell.delegate = self;
-//        [self.templateCellDict setObject:templateCell forKey:identifier];
-//    }
-//    //update
-//    [templateCell updateCellWithModel:&model indexPath:indexPath];
-//    //calculate
-//    NSLayoutConstraint *calculateCellConstraint = [NSLayoutConstraint constraintWithItem:templateCell.contentView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.f constant:self.view.bounds.size.width];
-//    [templateCell.contentView addConstraint:calculateCellConstraint];
-//    CGSize cellSize = [templateCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-//    [templateCell.contentView removeConstraint:calculateCellConstraint];
-//    return cellSize.height;
-//}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZYSideSlipFilterRegionModel *model = _dataList[indexPath.row];
     Class cellClazz =  NSClassFromString(model.containerCellClass);
@@ -216,7 +192,7 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
 
 - (void)sideSlipTableViewCellNeedsScrollToIndex:(NSIndexPath *)indexPath animated:(BOOL)animated {   
     UITableViewCell * cell = [_mainTableView cellForRowAtIndexPath:indexPath];
-    [_mainTableView scrollRectToVisible:cell.frame animated:YES];
+    [_mainTableView scrollRectToVisible:cell.frame animated:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -230,7 +206,7 @@ id (*objc_msgSendCreateCellWithIndexPath)(id self, SEL _cmd, NSIndexPath *) = (v
         _mainTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _mainTableView.delegate = self;
         _mainTableView.dataSource = self;
-        _mainTableView.estimatedRowHeight = 60;
+        _mainTableView.estimatedRowHeight = 150;
         _mainTableView.rowHeight = UITableViewAutomaticDimension;
         [_mainTableView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.view addSubview:_mainTableView];
